@@ -7,6 +7,8 @@ const BatimentSchema =new mongoose.Schema({
     id_propriétaire: { type: mongoose.Schema.Types.ObjectId, ref: 'Proprietaire', required: true },
     id_energie: { type: mongoose.Schema.Types.ObjectId, ref: 'Energie' },
     classement: { type: String },
+    surface: { type: Number },
+    nombre_de_machine: { type: Number},
 
 }) ;
 // TacheSchema.plugin(AutoIncrement, { inc_field: 'id_batiment' });
