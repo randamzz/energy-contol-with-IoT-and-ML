@@ -1,4 +1,4 @@
-// const mongoose = require('mongoose') ;
+const mongoose = require('mongoose') ;
 const BatimentSchema =new mongoose.Schema({
     // id_batiment:{type:Number , require:true} ,
     adresse: { type: String, required: true },

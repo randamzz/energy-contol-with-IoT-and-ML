@@ -5,6 +5,7 @@ const cors = require('cors') ;
 
 //importer routes 
 const batimentRoutes =require('./routes/batimentRoutes')
+const tacheRoutes=require('./routes/tacheRoutes')
 
 
 dotenv.config() // charger les var d env 
@@ -17,6 +18,7 @@ connectDB() // connexion a BD
 
 //Definire tt les routes 
 app.use('/api/batiments', batimentRoutes) // donc par ex : http//localehost:5000/api/batiments/new_batiment
+app.use('/api/taches',tacheRoutes)
 
 //demare serveur 
 const PORT =process.env.PORT || 5000 ;
