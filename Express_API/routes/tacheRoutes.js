@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const tacheController = require('../controllers/tacheController');
+const tacheController = require('../controllers/TacheController');
 
 // Routes for CRUD operations
 router.get('/', tacheController.getAllTaches);

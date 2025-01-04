@@ -8,6 +8,7 @@ const ProprietaireSchema =new mongoose.Schema({
     CIN: { type: String, required: true, unique: true },
     batiments: { type: mongoose.Schema.Types.ObjectId, ref: 'Batiment' },
 
+
 }) ;
 const Proprietaire = mongoose.model('Proprietaire',ProprietaireSchema) ;
 module.exports= Proprietaire ;

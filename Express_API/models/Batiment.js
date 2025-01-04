@@ -11,6 +11,5 @@ const BatimentSchema =new mongoose.Schema({
     nombre_de_machine: { type: Number},
 
 }) ;
-// TacheSchema.plugin(AutoIncrement, { inc_field: 'id_batiment' });
 const Batiment = mongoose.model('Batiment',BatimentSchema) ;
 module.exports= Batiment ;
