@@ -1,0 +1,2 @@
+# Ignorer le fichier .env dans le dossier express_api
+Express_API/.env
