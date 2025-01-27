@@ -27,7 +27,6 @@ def predict():
     try:
         # Récupérer les données envoyées par l'utilisateur dans le corps de la requête
         data = request.get_json()
-
         # Vérifier que la clé "features" existe et contient des données
         if 'features' not in data or not data['features']:
             return jsonify({'error': 'Aucune donnée de caractéristiques fournie'}), 400
@@ -53,7 +52,6 @@ def predict():
                 'consumption_prediction': consumption_predictions[i].tolist(),
                 'cost_prediction': cost_predictions[i].tolist()
             })
-
         return jsonify({'predictions': predictions}), 200
 
     except Exception as e:

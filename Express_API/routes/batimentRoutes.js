@@ -5,6 +5,7 @@ const batimentController = require('../controllers/batimentController') ;
 //definire les route 
 router.get('/',batimentController.getAllBatiments) ;
 router.post('/new_batiment',batimentController.createBatiment) ;
-router.put('/:id', batimentController.updateBatiment);
-router.delete('/:id', batimentController.deleteBatiment);
+router.post('/consommation_mensuelle', batimentController.getConsommationMensuelle);
+router.get('/top2', batimentController.getTopBatimentsConsommationFaible);
+router.get('/top3', batimentController.getTop3BatimentsConsommationFaible);
 module.exports= router ;
