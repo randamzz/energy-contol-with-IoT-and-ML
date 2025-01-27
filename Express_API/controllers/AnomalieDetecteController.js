@@ -8,8 +8,8 @@ const Anomalie = require('../models/Anomalie');
 const Proprietaire = require('../models/Proprietaire');
 
 // Initialisation Twilio
-const SID = "AC9c88caa34a497d807373dd4ec3571536";
-const AUTH_TOKEN = "72ccc76a9f7329836a646ee2b6d8b202";
+const SID = process.env.SID;
+const AUTH_TOKEN = process.env.AUTH_TOKEN;
 const client = twilio(SID, AUTH_TOKEN);
 
 // Fonction pour envoyer une notification via Twilio
