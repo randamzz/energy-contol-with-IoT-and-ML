@@ -8,9 +8,7 @@ const Anomalie = require('../models/Anomalie');
 const Proprietaire = require('../models/Proprietaire');
 
 // Initialisation Twilio
-const SID = process.env.SID;
-const AUTH_TOKEN = process.env.AUTH_TOKEN;
-const client = twilio(SID, AUTH_TOKEN);
+
 
 // Fonction pour envoyer une notification via Twilio
 const envoyerNotification = async (message) => {
