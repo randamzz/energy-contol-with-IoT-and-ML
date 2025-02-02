@@ -4,6 +4,72 @@ require('dotenv').config();
 const Batiment = require('../models/Batiment');
 const Energie = require('../models/Energie');
 
+
+const getProfileConsommation = async (req, res) => {
+    const { id } = req.params;  
+
+    try {
+        // Récupérer les détails du bâtiment
+        const batiment = await Batiment.findById(id);
+        if (!batiment) {
+            return res.status(404).json({ message: 'Bâtiment non trouvé' });
+        }
+
+        // Récupérer la consommation énergétique du bâtiment
+        const consommation = await Energie.aggregate([
+            {
+                $match: { id_batiment: id }  // Filtrer les consommations par l'ID du bâtiment
+            },
+            {
+                $group: {
+                    _id: "$id_batiment",
+                    consommation_totale: { $sum: "$consommation_bruite" },
+                    consommation_moyenne: { $avg: "$consommation_bruite" }
+                }
+            }
+        ]);
+
+        if (consommation.length === 0) {
+            return res.status(404).json({ message: 'Aucune consommation trouvée pour ce bâtiment' });
+        }
+
+        const consommationDetails = consommation[0];
+
+        // Calcul du coût énergétique
+        const tarifEnergie = 0.25;
+        const coutEnergetique = consommationDetails.consommation_totale * tarifEnergie;
+
+        //  Calcul de l'impact environnemental
+        // Supposons qu'une unité de consommation correspond à 0.4 kg de CO2 par kWh consommé
+        const emissionCO2 = consommationDetails.consommation_totale * 0.4; // kg CO2
+        const emissionCO2_message = `Your house emits ${emissionCO2.toFixed(2)} kg of CO2 this month.`;
+        const optimisation = consommationDetails.consommation_totale > 1000 
+            ? "Suggested optimization: Install energy-efficient equipment, such as LED lights and Class A energy devices, and improve the thermal insulation of the house."
+            :"Correct energy consumption. To improve efficiency, consider using solar panels or enhancing insulation."
+
+
+        consommation_moyenne = (consommationDetails.consommation_moyenne / 30).toFixed(2);
+        // Construction du profil de consommation
+        const profile = {
+            adresse: batiment.adresse,
+            surface: batiment.surface,
+            classement: batiment.classement,
+            consommation_totale: consommationDetails.consommation_totale,  //kWh 
+            consommation_moyenne: consommation_moyenne, // par joure en KWh
+            cout_energetique: coutEnergetique.toFixed(2),
+            emission_CO2: emissionCO2_message, 
+            optimisation_suggeree: optimisation,
+        };
+
+        res.status(200).json(profile);
+    } catch (err) {
+        console.error('Erreur :', err);
+        res.status(500).json({ message: 'Erreur lors de la récupération du profil de consommation', err });
+    }
+};
+
+
+
 // Fonction pour obtenir la consommation mensuelle pour chaque bâtiment
 const getConsommationMensuelle = async (req, res) => {
     const { mois, annee } = req.body;  // Mois et année passés dans la requête (format numérique, ex: 12 pour décembre, 2024 pour l'année)
@@ -47,7 +113,6 @@ const getConsommationMensuelle = async (req, res) => {
     }
 };
 
-// Exporter la fonction dans le contrôleur
 
 
 // GET Batiments
@@ -211,5 +276,6 @@ module.exports = {
     getAllBatiments,
     createBatiment,
     getConsommationMensuelle,
+    getProfileConsommation,
 };
 
