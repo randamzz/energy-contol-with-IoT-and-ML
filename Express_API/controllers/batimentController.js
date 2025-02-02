@@ -52,8 +52,6 @@ const getProfileConsommation = async (req, res) => {
         // Construction du profil de consommation
         const profile = {
             adresse: batiment.adresse,
-            surface: batiment.surface,
-            classement: batiment.classement,
             consommation_totale: consommationDetails.consommation_totale,  //kWh 
             consommation_moyenne: consommation_moyenne, // par joure en KWh
             cout_energetique: coutEnergetique.toFixed(2),
